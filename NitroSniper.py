@@ -1,4 +1,4 @@
-import re, datetime, requests
+import re, requests
 
 from colorama import Fore, init
 from discord.ext import commands
@@ -20,14 +20,11 @@ async def on_message(message):
     try:
         if 'discord.gift/' in message.content:
             code = re.search("discord.gift/(.*)", message.content).group(1)
-            start = datetime.datetime.now()
             headers = {
                 'Authorization': nitro_redeem_token,
                 'User-Agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
                               "discord/0.0.306 Chrome/78.0.3904.130 Electron/7.1.11 Safari/537.36 "
             }
-            elapsed = datetime.datetime.now() - start
-            elapsed = f'{elapsed.seconds}.{elapsed.microseconds}'
             nitro = f"{Fore.MAGENTA}Nitro-Sniper {Fore.RESET}| Code: {Fore.BLUE}{code} {Fore.RESET}| "
             r = requests.post(
                 f'https://discordapp.com/api/v6/entitlements/gift-codes/{code}/redeem',
